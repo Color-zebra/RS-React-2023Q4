@@ -31,17 +31,19 @@ export default class Header extends Component<Props, State> {
         className={classes.header}
         style={{ backgroundImage: `url(${img})` }}
       >
-        <ErrorButton />
-        <div>
-          <RootInput
-            value={this.state.inputValue}
-            onChange={(e) => this.onInputChange(e)}
-          />
-          <RootButton
-            onClick={() => this.props.onSearchPress(this.state.inputValue)}
-          >
-            Search
-          </RootButton>
+        <div className={classes.container}>
+          <ErrorButton />
+          <div>
+            <RootInput
+              value={this.state.inputValue}
+              onChange={(e) => this.onInputChange(e)}
+            />
+            <RootButton
+              onClick={() => this.props.onSearchPress(this.state.inputValue)}
+            >
+              Search
+            </RootButton>
+          </div>
         </div>
       </div>
     );

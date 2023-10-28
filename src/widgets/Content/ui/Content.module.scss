@@ -4,6 +4,8 @@
   grid-template-columns: repeat(auto-fill, 180px);
   gap: 20px;
   justify-content: center;
+  max-width: var(--container-width);
+  margin: 0 auto;
 }
 .spinner {
   height: calc(100vh - var(--header-height));
