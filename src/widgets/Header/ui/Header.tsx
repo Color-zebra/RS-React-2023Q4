@@ -2,6 +2,8 @@ import { ChangeEvent, Component } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import RootInput from '../../../shared/ui/RootInput/ui/RootInput';
 import { RootButton } from '../../../shared/ui/RootButton';
+import classes from './Header.module.scss';
+import img from '../../../shared/assets/images/back.jpeg';
 
 type Props = {
   onSearchPress: (val: string) => void;
@@ -25,7 +27,10 @@ export default class Header extends Component<Props, State> {
   }
   render() {
     return (
-      <div>
+      <div
+        className={classes.header}
+        style={{ backgroundImage: `url(${img})` }}
+      >
         <ErrorButton />
         <div>
           <RootInput
