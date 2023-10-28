@@ -1,14 +1,10 @@
 import { ButtonHTMLAttributes, Component } from 'react';
 import classNames from '../../../utils/classNames';
-import s from './RootButton.module.scss';
+import classes from './RootButton.module.scss';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-type State = {
-  isError: boolean;
-};
-
-export default class RootButton extends Component<Props, State> {
+export default class RootButton extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -17,7 +13,7 @@ export default class RootButton extends Component<Props, State> {
     return (
       <button
         type="button"
-        className={classNames(s.base, className)}
+        className={classNames(classes.base, className)}
         {...other}
       >
         {children}
