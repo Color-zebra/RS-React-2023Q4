@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './styles/styles.scss';
-import ErrorButton from './providers/ErrorBoundary/ui/ErrorButton';
+import { ErrorButton } from '../features/ErrorButton';
 
 export default class App extends Component {
   onClick = () => {
