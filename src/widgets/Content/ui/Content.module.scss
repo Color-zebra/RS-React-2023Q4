@@ -1,0 +1,13 @@
+.layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  gap: 20px;
+  justify-content: center;
+}
+.spinner {
+  height: calc(100vh - var(--header-size));
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

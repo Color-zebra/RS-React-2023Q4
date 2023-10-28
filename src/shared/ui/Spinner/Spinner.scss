@@ -27,19 +27,19 @@
 }
 
 .ldio-xwselerfbq div:nth-child(1) {
-  border-color: var(--primary-dark);
+  border-color: var(--decor-dark);
   animation-delay: 0s;
 }
 
 .ldio-xwselerfbq div:nth-child(2) {
-  border-color: var(--decor-blue);
+  border-color: var(--decor-light);
   animation-delay: -0.5s;
 }
 
 .loadingio-spinner-ripple-wk24wokh2o {
   width: 200px;
   height: 200px;
-  display: inline-block;
+  display: block;
   overflow: hidden;
   background: transparent;
 }

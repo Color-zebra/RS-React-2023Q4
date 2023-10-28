@@ -1,6 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { Character } from '../../../shared/types/types';
 import { CharactersAPI } from '../../../shared/api/RickAndMorty/Characters';
+import Content from '../../../widgets/Content/ui/Content';
 
 type Props = {
   children?: ReactNode;
@@ -8,6 +9,7 @@ type Props = {
 
 type State = {
   characters: Character[];
+  isReady: boolean;
 };
 
 export default class MainPage extends Component<Props, State> {
@@ -17,6 +19,7 @@ export default class MainPage extends Component<Props, State> {
     super(props);
     this.state = {
       characters: [],
+      isReady: false,
     };
     this.API = CharactersAPI.getInstance();
   }
@@ -25,16 +28,15 @@ export default class MainPage extends Component<Props, State> {
     const characters = await this.API.getCharacters();
     this.setState({
       characters,
+      isReady: true,
     });
   }
 
   render() {
-    console.log(this.state);
-
     return (
-      <div>
-        {this.state.characters ? JSON.stringify(this.state.characters) : ''}
-      </div>
+      <>
+        <Content {...this.state} />
+      </>
     );
   }
 }
