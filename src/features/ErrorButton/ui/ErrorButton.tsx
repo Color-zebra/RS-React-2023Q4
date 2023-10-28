@@ -1,4 +1,5 @@
 import { Component, ReactNode } from 'react';
+import { RootButton } from '../../../shared/ui/RootButton';
 
 type Props = {
   children?: ReactNode;
@@ -23,6 +24,6 @@ export default class ErrorButton extends Component<Props, State> {
     if (this.state.isError) {
       throw new Error('Ашипка!');
     }
-    return <button onClick={this.onClick}>Throw an error</button>;
+    return <RootButton onClick={this.onClick}>Throw an error</RootButton>;
   }
 }
