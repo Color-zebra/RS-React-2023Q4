@@ -1,4 +1,4 @@
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FallBackPage } from '../../../../pages/FallBackPage';
 
 interface Props {
@@ -10,20 +10,15 @@ interface State {
 
 class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
-    console.log('render');
-
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error) {
-    console.log(error);
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log(error, errorInfo);
-    console.log(error);
+  componentDidCatch() {
     this.setState({ hasError: true });
   }
 
