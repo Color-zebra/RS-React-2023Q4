@@ -1,3 +1,12 @@
 .red {
   background-color: red;
+  transition: all .2s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: red;
+    box-shadow: 0 0 10px red, 0 0 10px red, 0 0 10px red;
+    transform: scale(1.2);
+  }
 }
