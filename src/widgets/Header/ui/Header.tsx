@@ -29,9 +29,17 @@ export default class Header extends Component<Props, State> {
   onKeyPress(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      this.props.onSearchPress(this.state.inputValue);
+      this.submitInput(this.state.inputValue);
     }
   }
+
+  submitInput(value: string) {
+    this.props.onSearchPress(value);
+    this.setState((prev) => {
+      return { inputValue: prev.inputValue.trim() };
+    });
+  }
+
   render() {
     return (
       <div
@@ -46,9 +54,7 @@ export default class Header extends Component<Props, State> {
               onChange={(e) => this.onInputChange(e)}
               onKeyDown={(e) => this.onKeyPress(e)}
             />
-            <RootButton
-              onClick={() => this.props.onSearchPress(this.state.inputValue)}
-            >
+            <RootButton onClick={() => this.submitInput(this.state.inputValue)}>
               Search
             </RootButton>
           </div>
