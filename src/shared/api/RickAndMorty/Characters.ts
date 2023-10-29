@@ -25,7 +25,7 @@ export class CharactersAPI {
     } catch (e) {
       console.log(e);
     }
-    await this.sleep(1000); // server answer is too fast, i want to show spinner
+    await this.sleep(500);
     return res ? res.results : [];
   }
 
