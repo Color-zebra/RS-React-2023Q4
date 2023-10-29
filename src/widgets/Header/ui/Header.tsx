@@ -34,10 +34,9 @@ export default class Header extends Component<Props, State> {
   }
 
   submitInput(value: string) {
-    this.props.onSearchPress(value);
-    this.setState((prev) => {
-      return { inputValue: prev.inputValue.trim() };
-    });
+    const trimed = value.trim();
+    this.props.onSearchPress(trimed);
+    this.setState({ inputValue: trimed });
   }
 
   render() {

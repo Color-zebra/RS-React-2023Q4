@@ -55,9 +55,8 @@ export default class MainPage extends Component<Props, State> {
   }
 
   changeSearchParams(newParam: string) {
-    const param = newParam.trim();
-    localStorage.setItem(hashLSKey('searchParam'), param);
-    this.setState({ searchParam: param });
+    localStorage.setItem(hashLSKey('searchParam'), newParam);
+    this.setState({ searchParam: newParam });
   }
 
   render() {
