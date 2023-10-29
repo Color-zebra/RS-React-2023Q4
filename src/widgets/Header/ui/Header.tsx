@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, Component, KeyboardEvent } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import RootInput from '../../../shared/ui/RootInput/ui/RootInput';
 import { RootButton } from '../../../shared/ui/RootButton';
@@ -25,6 +25,13 @@ export default class Header extends Component<Props, State> {
   onInputChange(e: ChangeEvent<HTMLInputElement>) {
     this.setState({ inputValue: e.target.value });
   }
+
+  onKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      this.props.onSearchPress(this.state.inputValue);
+    }
+  }
   render() {
     return (
       <div
@@ -37,6 +44,7 @@ export default class Header extends Component<Props, State> {
             <RootInput
               value={this.state.inputValue}
               onChange={(e) => this.onInputChange(e)}
+              onKeyDown={(e) => this.onKeyPress(e)}
             />
             <RootButton
               onClick={() => this.props.onSearchPress(this.state.inputValue)}
