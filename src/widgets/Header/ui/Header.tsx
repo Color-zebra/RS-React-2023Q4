@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import RootInput from '../../../shared/ui/RootInput/ui/RootInput';
 import { RootButton } from '../../../shared/ui/RootButton';
@@ -10,55 +10,45 @@ type Props = {
   searchParam: string;
 };
 
-type State = {
-  inputValue: string;
-};
+const Header = (props: Props) => {
+  const { searchParam: initialSearchParam, onSearchPress } = props;
 
-export default class Header extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      inputValue: this.props.searchParam,
-    };
-  }
+  const [searchParam, setSearchParam] = useState<string>(initialSearchParam);
 
-  onInputChange(e: ChangeEvent<HTMLInputElement>) {
-    this.setState({ inputValue: e.target.value });
-  }
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchParam(e.target.value);
+  };
 
-  onKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+  const submitInput = (value: string) => {
+    const trimed = value.trim();
+    onSearchPress(trimed);
+    setSearchParam(trimed);
+  };
+
+  const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      this.submitInput(this.state.inputValue);
+      submitInput(searchParam);
     }
-  }
+  };
 
-  submitInput(value: string) {
-    const trimed = value.trim();
-    this.props.onSearchPress(trimed);
-    this.setState({ inputValue: trimed });
-  }
-
-  render() {
-    return (
-      <div
-        className={classes.header}
-        style={{ backgroundImage: `url(${img})` }}
-      >
-        <div className={classes.container}>
-          <ErrorButton />
-          <div>
-            <RootInput
-              value={this.state.inputValue}
-              onChange={(e) => this.onInputChange(e)}
-              onKeyDown={(e) => this.onKeyPress(e)}
-            />
-            <RootButton onClick={() => this.submitInput(this.state.inputValue)}>
-              Search
-            </RootButton>
-          </div>
+  return (
+    <div className={classes.header} style={{ backgroundImage: `url(${img})` }}>
+      <div className={classes.container}>
+        <ErrorButton />
+        <div>
+          <RootInput
+            value={searchParam}
+            onChange={onInputChange}
+            onKeyDown={onKeyPress}
+          />
+          <RootButton onClick={() => submitInput(searchParam)}>
+            Search
+          </RootButton>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Header;
