@@ -3,7 +3,7 @@ import { CharacterCard } from '../../../entities/CharacterCard';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
 import { Character } from '../../../shared/types/types';
 import classes from './Content.module.scss';
-import NothingFound from '../../../entities/NothingFound/NothingFound/NothingFound';
+import { NothingFound } from '../../../entities/NothingFound';
 
 type Props = {
   isReady: boolean;
