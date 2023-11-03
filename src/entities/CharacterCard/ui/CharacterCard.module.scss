@@ -12,6 +12,15 @@
   }
 }
 
+.image-wrapper {
+  background-color: black;
+  height: 253px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .image {
   width: 100%;
   height: auto;

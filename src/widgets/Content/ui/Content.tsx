@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 import { CharacterCard } from '../../../entities/CharacterCard';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
-import { Character } from '../../../shared/types/types';
 import classes from './Content.module.scss';
 import { NothingFound } from '../../../entities/NothingFound';
+import { CharacterAttributes } from '../../../shared/types/types';
 
 type Props = {
   isReady: boolean;
-  characters: Character[];
+  characters: CharacterAttributes[];
 };
 
 const Content = (props: Props) => {
@@ -19,7 +19,7 @@ const Content = (props: Props) => {
     res = (
       <div className={classes.layout}>
         {characters.map((char) => (
-          <CharacterCard key={char.id} {...char} />
+          <CharacterCard key={char.name} {...char} />
         ))}
       </div>
     );
