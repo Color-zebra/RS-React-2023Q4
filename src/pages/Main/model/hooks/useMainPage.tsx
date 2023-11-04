@@ -12,7 +12,7 @@ export const useMainPage = () => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [searchParam, setSearchParam] = useState(initSearchParam);
 
-  const { currPage, setCurrPage, lastPage, setLastPage, limit } =
+  const { currPage, setCurrPage, lastPage, setLastPage, limit, setLimit } =
     usePagination();
 
   const changeSearchParams = (newParam: string) => {
@@ -48,5 +48,7 @@ export const useMainPage = () => {
     currPage,
     lastPage,
     setCurrPage,
+    limit,
+    setLimit,
   };
 };
