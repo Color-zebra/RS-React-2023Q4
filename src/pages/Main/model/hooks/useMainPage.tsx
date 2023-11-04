@@ -29,6 +29,8 @@ export const useMainPage = () => {
         limit: limit,
       });
 
+      console.log(answer);
+
       setCharacters(answer.characters);
       setCurrPage(answer.page);
       setLastPage(Math.ceil(answer.records / limit));
