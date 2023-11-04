@@ -9,4 +9,14 @@
   &:hover {
     background-color: #009a9a;
   }
+
+  &:disabled {
+    background-color: #00ffff56;
+    cursor: unset;
+  }
+
+  &:disabled:hover {
+    background-color: #00ffff56;
+    cursor: unset;
+  }
 }
