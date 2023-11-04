@@ -1,4 +1,8 @@
-import { CharacterAttributes, CharactersAnswer } from '../../types/types';
+import {
+  CharactersAnswer,
+  HandledData,
+  RequestParams,
+} from '../../types/types';
 
 export class CharactersAPI {
   private static instance: CharactersAPI;
@@ -9,7 +13,7 @@ export class CharactersAPI {
   constructor() {
     this.baseFilterString = '&sort=name&filter[gender_not_null]=1';
     this.pageSize = 10;
-    this.baseURL = `https://api.potterdb.com/v1/characters?page[size]=${this.pageSize}${this.baseFilterString}`;
+    this.baseURL = `https://api.potterdb.com/v1/characters?${this.baseFilterString}`;
   }
 
   public static getInstance() {
@@ -19,11 +23,14 @@ export class CharactersAPI {
     return CharactersAPI.instance;
   }
 
-  public async getCharacters(
-    searchParam?: string
-  ): Promise<CharacterAttributes[] | never[]> {
+  public async getCharacters(params: RequestParams): Promise<HandledData> {
+    const { searchParam = null, page = null, limit = null } = params;
+
     const queryString = searchParam ? `&filter[name_cont]=${searchParam}` : '';
-    const link = `${this.baseURL}${queryString}`;
+    const pageString = page ? `&page[number]=${page}` : '';
+    const pageSizeString = limit ? `&page[size]=${limit}` : '';
+
+    const link = `${this.baseURL}${queryString}${pageString}${pageSizeString}`;
     let res: CharactersAnswer | null = null;
     try {
       const response = await fetch(link);
@@ -34,13 +41,21 @@ export class CharactersAPI {
       console.log('Ooops! Looks like somethig wrong with API');
     }
     if (!res) {
-      return [];
+      return {
+        characters: [],
+        page: 1,
+        records: 0,
+      };
     }
     return this.transformData(res);
   }
 
-  private transformData(data: CharactersAnswer): CharacterAttributes[] {
-    return data.data.map((character) => character.attributes);
+  private transformData(data: CharactersAnswer): HandledData {
+    return {
+      characters: data.data.map((character) => character.attributes),
+      page: data.meta.pagination.current,
+      records: data.meta.pagination.records,
+    };
   }
 
   private async sleep(time: number) {
