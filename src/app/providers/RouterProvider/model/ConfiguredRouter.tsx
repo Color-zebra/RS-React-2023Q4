@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { MainPage } from '../../../../pages/Main';
+import { Details } from '../../../../widgets/Details';
 
 export const ConfiguredRouter = createBrowserRouter([
   {
@@ -9,7 +10,7 @@ export const ConfiguredRouter = createBrowserRouter([
     children: [
       {
         path: ':id',
-        element: <p>Outlet elem</p>,
+        element: <Details />,
       },
     ],
   },

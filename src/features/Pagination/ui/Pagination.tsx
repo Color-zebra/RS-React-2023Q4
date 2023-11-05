@@ -10,8 +10,6 @@ interface Props {
 
 export const Pagination = (props: Props) => {
   const { currPage, lastPage, changePage } = props;
-  console.log(currPage);
-  console.log(lastPage);
 
   return (
     <div className={classes.pagination}>

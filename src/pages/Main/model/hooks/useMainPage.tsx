@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CharacterAttributes } from '../../../../shared/types/types';
 import { CharactersAPI } from '../../../../shared/api/HarryPotter/Characters';
 import hashLSKey from '../../../../shared/utils/hashLocalStorageKey';
@@ -21,25 +21,23 @@ export const useMainPage = () => {
     setSearchParam(newParam);
   };
 
+  const getCharacters = useCallback(async () => {
+    setIsReady(false);
+    const answer = await Api.getCharacters({
+      searchParam: searchParam,
+      page: currPage,
+      limit: limit,
+    });
+
+    setCharacters(answer.characters);
+    setCurrPage(answer.page);
+    setLastPage(Math.ceil(answer.records / limit));
+    setIsReady(true);
+  }, [Api, currPage, limit, searchParam, setCurrPage, setLastPage]);
+
   useEffect(() => {
-    const getCharacters = async () => {
-      setIsReady(false);
-      const answer = await Api.getCharacters({
-        searchParam: searchParam,
-        page: currPage,
-        limit: limit,
-      });
-
-      console.log(answer);
-
-      setCharacters(answer.characters);
-      setCurrPage(answer.page);
-      setLastPage(Math.ceil(answer.records / limit));
-      setIsReady(true);
-    };
-
     getCharacters();
-  }, [Api, searchParam, currPage, limit, setCurrPage, setLastPage]);
+  }, [getCharacters]);
 
   return {
     searchParam,

@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+const basicPageSize = 6;
 
 export const usePagination = () => {
   const [currPage, setCurrPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(12);
+  const [limit, setLimit] = useState<number>(basicPageSize);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSetCurrPage = useCallback(

@@ -15,6 +15,7 @@ export type CharacterAttributes = {
   wiki: string;
   gender: string;
   slug: string;
+  id: string;
 };
 
 export type PaginationData = {

@@ -1,12 +1,17 @@
 import { CharacterAttributes } from '../../../shared/types/types';
 import classes from './CharacterCard.module.scss';
 import placeholder from '../../../shared/assets/images/placeholder.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const CharacterCard = (props: CharacterAttributes) => {
-  const { name, image, species, gender } = props;
+  const navigate = useNavigate();
+  const { name, image, species, gender, id } = props;
+  const handleClick = () => {
+    navigate(id + window.location.search);
+  };
 
   return (
-    <div className={classes.card}>
+    <div onClick={handleClick} className={classes.card}>
       <div className={classes['image-wrapper']}>
         <img
           className={classes.image}

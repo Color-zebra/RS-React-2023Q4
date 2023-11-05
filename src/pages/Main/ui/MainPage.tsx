@@ -8,6 +8,8 @@ import { Outlet } from 'react-router-dom';
 import classes from './MainPage.module.scss';
 
 const MainPage = () => {
+  console.log('main page rendered');
+
   const {
     searchParam,
     changeSearchParams,
