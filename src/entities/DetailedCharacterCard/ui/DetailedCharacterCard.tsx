@@ -3,7 +3,7 @@ import classes from './DetailedCharacterCard.module.scss';
 import placeholder from '../../../shared/assets/images/placeholder.jpg';
 
 export const DetailedCharacterCard = (props: CharacterAttributes) => {
-  const { name, image, species, gender, born, wiki } = props;
+  const { name, image, species, gender, location, status } = props;
 
   return (
     <div>
@@ -26,17 +26,10 @@ export const DetailedCharacterCard = (props: CharacterAttributes) => {
             <span className={classes.value}>{gender}</span>
           </li>
           <li className={classes['list-item']}>
-            <span className={classes.value}>Born: {born}</span>
+            <span className={classes.value}>{status}</span>
           </li>
           <li className={classes['list-item']}>
-            <a
-              href={wiki}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.value}
-            >
-              Wiki link
-            </a>
+            <span className={classes.value}>{location}</span>
           </li>
         </ul>
       </div>

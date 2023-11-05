@@ -13,16 +13,12 @@ const emptyData = {
 export class CharactersAPI {
   private static instance: CharactersAPI;
   private baseURL: string;
-  private baseFilterString: string;
   private requestWasDone: number;
   private maxRequestsPerSec: number;
-  private baseCharacterUrl: string;
   errorMessage: string;
 
   constructor() {
-    this.baseFilterString = '&sort=name&filter[gender_not_null]=1';
-    this.baseURL = `https://api.potterdb.com/v1/characters?${this.baseFilterString}`;
-    this.baseCharacterUrl = 'https://api.potterdb.com/v1/characters/';
+    this.baseURL = `https://belka.romakhin.ru/api/v1/rimorti`;
     this.requestWasDone = 0;
     this.maxRequestsPerSec = 10;
     this.errorMessage = 'Ooops! Looks like somethig wrong with API';
@@ -38,11 +34,11 @@ export class CharactersAPI {
   public async getCharacters(params: RequestParams): Promise<HandledData> {
     const { searchParam = null, page = null, limit = null } = params;
 
-    const queryString = searchParam ? `&filter[name_cont]=${searchParam}` : '';
-    const pageString = page ? `&page[number]=${page}` : '';
-    const pageSizeString = limit ? `&page[size]=${limit}` : '';
+    const queryString = searchParam ? `&search.name=${searchParam}` : '';
+    const pageString = page ? `page=${page}` : '';
+    const pageSizeString = limit ? `&page_size=${limit}` : '';
 
-    const link = `${this.baseURL}${queryString}${pageString}${pageSizeString}`;
+    const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;
     let res: CharactersAnswer | null = null;
     if (this.requestWasDone >= this.maxRequestsPerSec) {
       return emptyData;
@@ -62,11 +58,11 @@ export class CharactersAPI {
       return emptyData;
     }
 
-    return this.transformData(res);
+    return this.transformData(res, Number(page));
   }
 
   async getSingleCharacter(id: string) {
-    const link = this.baseCharacterUrl + id;
+    const link = this.baseURL + '/' + id;
     let res = null;
 
     if (this.requestWasDone >= this.maxRequestsPerSec) {
@@ -85,19 +81,15 @@ export class CharactersAPI {
       console.log(this.errorMessage);
     }
 
-    return res.data.attributes;
+    return res;
   }
 
-  private transformData(data: CharactersAnswer): HandledData {
-    const characters = data.data.map((character) => {
-      const attrs = character.attributes;
-      attrs.id = character.id;
-      return attrs;
-    });
+  private transformData(data: CharactersAnswer, page: number): HandledData {
+    const characters = data.results;
     return {
       characters,
-      page: data.meta.pagination.current,
-      records: data.meta.pagination.records,
+      page,
+      records: data.total,
     };
   }
 

@@ -1,20 +1,10 @@
-export type CharacterData = {
-  attributes: CharacterAttributes;
-  id: string;
-  links: {
-    self: string;
-  };
-  type: string;
-};
-
 export type CharacterAttributes = {
   name: string;
-  born: string;
-  image: string;
+  status: string;
   species: string;
-  wiki: string;
   gender: string;
-  slug: string;
+  location: string;
+  image: string;
   id: string;
 };
 
@@ -26,16 +16,8 @@ export type PaginationData = {
 };
 
 export type CharactersAnswer = {
-  data: CharacterData[];
-  links: {
-    current: string;
-    last: string;
-    next: string;
-    self: string;
-  };
-  meta: {
-    pagination: PaginationData;
-  };
+  total: number;
+  results: CharacterAttributes[];
 };
 
 export type HandledData = {

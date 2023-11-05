@@ -21,7 +21,7 @@ const Content = (props: Props) => {
     res = (
       <div className={classes.layout}>
         {characters.map((char) => (
-          <CharacterCard key={char.slug} {...char} />
+          <CharacterCard key={char.id} {...char} />
         ))}
       </div>
     );
