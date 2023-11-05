@@ -24,7 +24,7 @@ export class CharactersAPI {
     this.baseURL = `https://api.potterdb.com/v1/characters?${this.baseFilterString}`;
     this.baseCharacterUrl = 'https://api.potterdb.com/v1/characters/';
     this.requestWasDone = 0;
-    this.maxRequestsPerSec = 5;
+    this.maxRequestsPerSec = 10;
     this.errorMessage = 'Ooops! Looks like somethig wrong with API';
   }
 
@@ -48,7 +48,6 @@ export class CharactersAPI {
       return emptyData;
     } else {
       this.requestWasDone += 1;
-      console.log(this.requestWasDone);
       setTimeout(() => (this.requestWasDone -= 1), 1000);
     }
     try {
@@ -74,7 +73,6 @@ export class CharactersAPI {
       return emptyData;
     } else {
       this.requestWasDone += 1;
-      console.log(this.requestWasDone);
       setTimeout(() => (this.requestWasDone -= 1), 1000);
     }
 
@@ -86,8 +84,6 @@ export class CharactersAPI {
     } catch (e) {
       console.log(this.errorMessage);
     }
-
-    console.log(res.data.attributes);
 
     return res.data.attributes;
   }

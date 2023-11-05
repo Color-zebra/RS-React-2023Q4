@@ -8,8 +8,6 @@ import { Outlet } from 'react-router-dom';
 import classes from './MainPage.module.scss';
 
 const MainPage = () => {
-  console.log('main page rendered');
-
   const {
     searchParam,
     changeSearchParams,
@@ -30,11 +28,13 @@ const MainPage = () => {
         <Content characters={characters} isReady={isReady} />
         <Outlet />
       </div>
-      <Pagination
-        currPage={currPage}
-        lastPage={lastPage}
-        changePage={(pageNumber: number) => setCurrPage(pageNumber)}
-      />
+      {isReady && (
+        <Pagination
+          currPage={currPage}
+          lastPage={lastPage}
+          changePage={(pageNumber: number) => setCurrPage(pageNumber)}
+        />
+      )}
     </>
   );
 };
