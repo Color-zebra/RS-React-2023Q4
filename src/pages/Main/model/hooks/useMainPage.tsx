@@ -17,6 +17,7 @@ export const useMainPage = () => {
 
   const changeSearchParams = (newParam: string) => {
     localStorage.setItem(hashLSKey('searchParam'), newParam);
+    setCurrPage(1);
     setSearchParam(newParam);
   };
 
