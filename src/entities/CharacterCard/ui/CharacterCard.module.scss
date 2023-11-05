@@ -1,21 +1,22 @@
 .card {
-  width: 180px;
-  height: 400px;
+  height: 100px;
   overflow: hidden;
   background-color: var(--primary-bright);
   border-radius: 9px;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
 
   &:hover {
     box-shadow: 0 0 10px var(--decor-light);
-    transform: scale(1.05);
+    transform: scale(1.01);
   }
 }
 
 .image-wrapper {
   background-color: black;
-  height: 253px;
+  height: 100px;
+  width: 100px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -25,7 +26,6 @@
 .image {
   width: 100%;
   height: auto;
-  min-height: 180px;
 }
 
 .list {

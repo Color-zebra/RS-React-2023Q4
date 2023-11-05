@@ -1,16 +1,9 @@
 import './styles/styles.scss';
-import { MainPage } from '../pages/Main';
-import { RouterProvider } from './providers/RouterProvider';
-import { Route, Routes } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
+import { ConfiguredRouter } from './providers/RouterProvider';
 
 const App = () => {
-  return (
-    <RouterProvider>
-      <Routes>
-        <Route path="/" Component={MainPage} />
-      </Routes>
-    </RouterProvider>
-  );
+  return <RouterProvider router={ConfiguredRouter} />;
 };
 
 export default App;

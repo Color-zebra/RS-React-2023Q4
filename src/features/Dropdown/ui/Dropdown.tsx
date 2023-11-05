@@ -9,6 +9,7 @@ export const Dropdown = (props: Props) => {
 
   return (
     <div className={classes.wrapper}>
+      <h3>Elements per page</h3>
       <select
         className={classes.dropdown}
         value={limit}

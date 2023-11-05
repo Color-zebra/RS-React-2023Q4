@@ -1,3 +1,3 @@
-import { RouterProvider } from './model/RouterProvider';
+import { ConfiguredRouter } from './model/ConfiguredRouter';
 
-export { RouterProvider };
+export { ConfiguredRouter };
