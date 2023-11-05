@@ -1,0 +1,21 @@
+.wrapper {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+}
+
+.dropdown {
+  background-color: greenyellow;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.item {
+  background-color: aqua;
+}
