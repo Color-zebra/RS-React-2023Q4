@@ -1,0 +1,22 @@
+.base {
+  background-color: aqua;
+  height: 35px;
+  border-radius: 5px;
+  padding: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #009a9a;
+  }
+
+  &:disabled {
+    background-color: #00ffff56;
+    cursor: unset;
+  }
+
+  &:disabled:hover {
+    background-color: #00ffff56;
+    cursor: unset;
+  }
+}

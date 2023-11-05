@@ -1,0 +1,13 @@
+.layout {
+  flex: 1 1 100%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.spinner {
+  // height: calc(100vh - var(--header-height) - 35px - 55px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
