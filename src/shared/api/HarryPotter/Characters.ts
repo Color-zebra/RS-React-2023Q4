@@ -35,7 +35,7 @@ export class CharactersAPI {
     const { searchParam = null, page = null, limit = null } = params;
 
     const queryString = searchParam ? `&search.name=${searchParam}` : '';
-    const pageString = page ? `page=${page}` : '';
+    const pageString = page ? `&page=${page}` : '';
     const pageSizeString = limit ? `&page_size=${limit}` : '';
 
     const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;

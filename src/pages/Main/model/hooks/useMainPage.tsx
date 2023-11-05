@@ -31,7 +31,7 @@ export const useMainPage = () => {
 
     setCharacters(answer.characters);
     setCurrPage(answer.page);
-    setLastPage(Math.ceil(answer.records / limit));
+    setLastPage(Math.floor(answer.records / limit));
     setIsReady(true);
   }, [Api, currPage, limit, searchParam, setCurrPage, setLastPage]);
 
