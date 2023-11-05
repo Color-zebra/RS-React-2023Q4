@@ -4,6 +4,7 @@ import Spinner from '../../../shared/ui/Spinner/Spinner';
 import classes from './Content.module.scss';
 import { NothingFound } from '../../../entities/NothingFound';
 import { CharacterAttributes } from '../../../shared/types/types';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   isReady: boolean;
@@ -12,6 +13,7 @@ type Props = {
 
 const Content = (props: Props) => {
   const { isReady, characters } = props;
+  const navigate = useNavigate();
 
   let res: ReactNode;
 
@@ -32,7 +34,10 @@ const Content = (props: Props) => {
       {isReady ? (
         res
       ) : (
-        <div className={classes.spinner}>
+        <div
+          className={classes.spinner}
+          onClick={() => navigate('..' + window.location.search)}
+        >
           <Spinner />
         </div>
       )}

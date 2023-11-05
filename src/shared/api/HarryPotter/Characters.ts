@@ -15,11 +15,17 @@ export class CharactersAPI {
   private baseURL: string;
   private baseFilterString: string;
   private requestWasDone: number;
+  private maxRequestsPerSec: number;
+  private baseCharacterUrl: string;
+  errorMessage: string;
 
   constructor() {
     this.baseFilterString = '&sort=name&filter[gender_not_null]=1';
     this.baseURL = `https://api.potterdb.com/v1/characters?${this.baseFilterString}`;
+    this.baseCharacterUrl = 'https://api.potterdb.com/v1/characters/';
     this.requestWasDone = 0;
+    this.maxRequestsPerSec = 5;
+    this.errorMessage = 'Ooops! Looks like somethig wrong with API';
   }
 
   public static getInstance() {
@@ -38,7 +44,7 @@ export class CharactersAPI {
 
     const link = `${this.baseURL}${queryString}${pageString}${pageSizeString}`;
     let res: CharactersAnswer | null = null;
-    if (this.requestWasDone >= 5) {
+    if (this.requestWasDone >= this.maxRequestsPerSec) {
       return emptyData;
     } else {
       this.requestWasDone += 1;
@@ -51,13 +57,39 @@ export class CharactersAPI {
         res = await response.json();
       }
     } catch (e) {
-      console.log('Ooops! Looks like somethig wrong with API');
+      console.log(this.errorMessage);
     }
     if (!res) {
       return emptyData;
     }
 
     return this.transformData(res);
+  }
+
+  async getSingleCharacter(id: string) {
+    const link = this.baseCharacterUrl + id;
+    let res = null;
+
+    if (this.requestWasDone >= this.maxRequestsPerSec) {
+      return emptyData;
+    } else {
+      this.requestWasDone += 1;
+      console.log(this.requestWasDone);
+      setTimeout(() => (this.requestWasDone -= 1), 1000);
+    }
+
+    try {
+      const response = await fetch(link);
+      if (response.ok) {
+        res = await response.json();
+      }
+    } catch (e) {
+      console.log(this.errorMessage);
+    }
+
+    console.log(res.data.attributes);
+
+    return res.data.attributes;
   }
 
   private transformData(data: CharactersAnswer): HandledData {
