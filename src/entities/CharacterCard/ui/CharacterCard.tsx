@@ -11,7 +11,7 @@ const CharacterCard = (props: CharacterAttributes) => {
   };
 
   return (
-    <div onClick={handleClick} className={classes.card}>
+    <article onClick={handleClick} className={classes.card}>
       <div className={classes['image-wrapper']}>
         <img
           className={classes.image}
@@ -30,7 +30,7 @@ const CharacterCard = (props: CharacterAttributes) => {
           gender: <span className={classes.value}>{gender}</span>
         </li>
       </ul>
-    </div>
+    </article>
   );
 };
 

@@ -33,7 +33,10 @@ const Header = (props: Props) => {
   };
 
   return (
-    <div className={classes.header} style={{ backgroundImage: `url(${img})` }}>
+    <header
+      className={classes.header}
+      style={{ backgroundImage: `url(${img})` }}
+    >
       <div className={classes.container}>
         <ErrorButton />
         <div>
@@ -47,7 +50,7 @@ const Header = (props: Props) => {
           </RootButton>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

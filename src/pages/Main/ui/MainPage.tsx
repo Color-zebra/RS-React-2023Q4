@@ -24,10 +24,10 @@ const MainPage = () => {
     <>
       <Header onSearchPress={changeSearchParams} searchParam={searchParam} />
       <Dropdown limit={limit} setLimit={setLimit} />
-      <div className={classes.layout}>
+      <main className={classes.layout}>
         <Content characters={characters} isReady={isReady} />
         <Outlet />
-      </div>
+      </main>
       {isReady && (
         <Pagination
           currPage={currPage}

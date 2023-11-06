@@ -6,8 +6,8 @@ export const DetailedCharacterCard = (props: CharacterAttributes) => {
   const { name, image, species, gender, location, status } = props;
 
   return (
-    <div>
-      <div className={classes.wrapper}>
+    <>
+      <article className={classes.wrapper}>
         <div className={classes['image-wrapper']}>
           <img
             className={classes.image}
@@ -32,7 +32,7 @@ export const DetailedCharacterCard = (props: CharacterAttributes) => {
             <span className={classes.value}>{location}</span>
           </li>
         </ul>
-      </div>
-    </div>
+      </article>
+    </>
   );
 };
