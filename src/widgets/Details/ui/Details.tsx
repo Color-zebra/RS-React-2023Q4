@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import classes from './Details.module.scss';
 import { useEffect, useState } from 'react';
-import { CharactersAPI } from '../../../shared/api/HarryPotter/Characters';
+import { CharactersAPI } from '../../../shared/api/RickAndMorty/Characters';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
 import { CharacterAttributes } from '../../../shared/types/types';
 import { DetailedCharacterCard } from '../../../entities/DetailedCharacterCard';

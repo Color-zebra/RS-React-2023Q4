@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
-import RootInput from '../../../shared/ui/RootInput/ui/RootInput';
 import { RootButton } from '../../../shared/ui/RootButton';
+import { RootInput } from '../../../shared/ui/RootInput';
 import classes from './Header.module.scss';
 import img from '../../../shared/assets/images/back.jpeg';
 

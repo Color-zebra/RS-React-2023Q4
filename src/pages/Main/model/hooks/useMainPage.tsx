@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CharacterAttributes } from '../../../../shared/types/types';
-import { CharactersAPI } from '../../../../shared/api/HarryPotter/Characters';
+import { CharactersAPI } from '../../../../shared/api/RickAndMorty/Characters';
 import hashLSKey from '../../../../shared/utils/hashLocalStorageKey';
 import { usePagination } from './usePagination';
 
