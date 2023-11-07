@@ -1,4 +1,5 @@
 import {
+  CharacterAttributes,
   CharactersAnswer,
   HandledData,
   RequestParams,
@@ -10,18 +11,32 @@ const emptyData = {
   records: 0,
 };
 
+const emptyCharacter: CharacterAttributes = {
+  gender: '',
+  id: '',
+  image: '',
+  location: '',
+  name: '',
+  species: '',
+  status: '',
+};
+
 export class CharactersAPI {
   private static instance: CharactersAPI;
   private baseURL: string;
   private requestWasDone: number;
   private maxRequestsPerSec: number;
   errorMessage: string;
+  abortControllerCharacters: AbortController | null;
+  abortControllerSingleCharacter: AbortController | null;
 
   constructor() {
     this.baseURL = `https://belka.romakhin.ru/api/v1/rimorti`;
     this.requestWasDone = 0;
     this.maxRequestsPerSec = 10;
     this.errorMessage = 'Ooops! Looks like somethig wrong with API';
+    this.abortControllerCharacters = null;
+    this.abortControllerSingleCharacter = null;
   }
 
   public static getInstance() {
@@ -32,56 +47,53 @@ export class CharactersAPI {
   }
 
   public async getCharacters(params: RequestParams): Promise<HandledData> {
-    const { searchParam = null, page = null, limit = null } = params;
+    this.checkCharactersAbortController();
 
-    const queryString = searchParam ? `&search.name=${searchParam}` : '';
-    const pageString = page ? `&page=${page}` : '';
-    const pageSizeString = limit ? `&page_size=${limit}` : '';
-
-    const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;
-    let res: CharactersAnswer | null = null;
-    if (this.requestWasDone >= this.maxRequestsPerSec) {
+    if (this.handleRequestsFrequency()) {
       return emptyData;
-    } else {
-      this.requestWasDone += 1;
-      setTimeout(() => (this.requestWasDone -= 1), 1000);
     }
+
+    let res: CharactersAnswer | null = null;
     try {
-      const response = await fetch(link);
+      const response = await fetch(this.createCharactersQueryStr(params), {
+        signal: this.abortControllerCharacters!.signal,
+      });
       if (response.ok) {
         res = await response.json();
       }
     } catch (e) {
-      console.log(this.errorMessage);
+      if ((e as Error).name !== 'AbortError') {
+        console.log(this.errorMessage);
+      }
     }
-    if (!res) {
-      return emptyData;
-    }
+    this.abortControllerCharacters = null;
 
-    return this.transformData(res, Number(page));
+    return res ? this.transformData(res, Number(params.page)) : emptyData;
   }
 
   async getSingleCharacter(id: string) {
-    const link = this.baseURL + '/' + id;
-    let res = null;
+    this.checkSingleCharacterAbortController();
 
-    if (this.requestWasDone >= this.maxRequestsPerSec) {
-      return emptyData;
-    } else {
-      this.requestWasDone += 1;
-      setTimeout(() => (this.requestWasDone -= 1), 1000);
+    if (this.handleRequestsFrequency()) {
+      return emptyCharacter;
     }
 
+    const link = this.baseURL + '/' + id;
+
+    let res = null;
     try {
       const response = await fetch(link);
       if (response.ok) {
         res = await response.json();
       }
     } catch (e) {
-      console.log(this.errorMessage);
+      if ((e as Error).name !== 'AbortError') {
+        console.log(this.errorMessage);
+      }
     }
+    this.abortControllerSingleCharacter = null;
 
-    return res;
+    return res ? res : emptyCharacter;
   }
 
   private transformData(data: CharactersAnswer, page: number): HandledData {
@@ -91,6 +103,40 @@ export class CharactersAPI {
       page,
       records: data.total,
     };
+  }
+
+  private handleRequestsFrequency() {
+    if (this.requestWasDone >= this.maxRequestsPerSec) {
+      return true;
+    } else {
+      this.requestWasDone += 1;
+      setTimeout(() => (this.requestWasDone -= 1), 1000);
+      return false;
+    }
+  }
+
+  private createCharactersQueryStr(params: RequestParams) {
+    const { searchParam = null, page = null, limit = null } = params;
+    const queryString = searchParam ? `&search.name=${searchParam}` : '';
+    const pageString = page ? `&page=${page}` : '';
+    const pageSizeString = limit ? `&page_size=${limit}` : '';
+    const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;
+
+    return link;
+  }
+
+  private checkCharactersAbortController() {
+    if (this.abortControllerCharacters) {
+      this.abortControllerCharacters.abort();
+    }
+    this.abortControllerCharacters = new AbortController();
+  }
+
+  private checkSingleCharacterAbortController() {
+    if (this.abortControllerSingleCharacter) {
+      this.abortControllerSingleCharacter.abort();
+    }
+    this.abortControllerSingleCharacter = new AbortController();
   }
 
   private async sleep(time: number) {
