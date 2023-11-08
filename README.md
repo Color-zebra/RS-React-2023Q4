@@ -1,27 +1,24 @@
-# React + TypeScript + Vite
+Привет! Проект пишется в рамках курса [RSSchool React](https://rs.school/react/).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Этапы:
+- [x] Class components
+- [x] Functional components
+- [ ] Context and tests
+- [ ] Redux. RTK
+- [ ] NextJS.SSR.SSG
+- [ ] Forms
+- [ ] GraphiQL. Team project
+- [ ] GraphiQL. Team project
+- [ ] GraphiQL. Team project
 
-Currently, two official plugins are available:
+В этом проекте используется архитектура [FSD](https://feature-sliced.design/ru/). Структура папок соответствует архитектуре, почитать подробнее можно [здесь](https://feature-sliced.design/ru/docs/reference/layers).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Что бы развернуть проект локально, выполни следующие скрипты:
 
-## Expanding the ESLint configuration
+1) git clone https://github.com/Color-zebra/RS-React-2023Q4
+2) cd RS-React-2023Q4
+3) git checkout {название ветки}
+4) npm i
+5) npm run start
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Ссылка на актуальный [деплой](https://roaring-alpaca-c5a890.netlify.app/)
