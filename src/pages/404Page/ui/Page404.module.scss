@@ -66,10 +66,11 @@
   border-radius: 15px;
   cursor: pointer;
   transition: all 3s;
-  color: black;
+  color: rgba(0, 0, 0, 0.1);
 
   &:hover {
     background-color: rgba(255, 134, 53, 0.9);
+    color: rgba(0, 0, 0, 1);
     transform: scale(1.2);
   }
 }
