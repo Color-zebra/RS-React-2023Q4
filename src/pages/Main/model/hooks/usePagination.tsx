@@ -10,7 +10,7 @@ export const usePagination = () => {
 
   const handleSetCurrPage = useCallback(
     (pageNumber: number) => {
-      setCurrPage(pageNumber);
+      setCurrPage(() => pageNumber);
       searchParams.set('page', String(pageNumber));
       setSearchParams(searchParams);
     },
@@ -19,8 +19,8 @@ export const usePagination = () => {
 
   const handleSetLimit = useCallback(
     (pageSize: number) => {
-      setLimit(pageSize);
-      setCurrPage(1);
+      setLimit(() => pageSize);
+      setCurrPage(() => 1);
       searchParams.set('page', '1');
       setSearchParams(searchParams);
     },

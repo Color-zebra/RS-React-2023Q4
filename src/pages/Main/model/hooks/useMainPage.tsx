@@ -4,24 +4,31 @@ import hashLSKey from '../../../../shared/utils/hashLocalStorageKey';
 import { usePagination } from './usePagination';
 import { SearchContext } from '../../../../app/providers/ContextProvider/model/contexts/SearchContext';
 import { CharactersContext } from '../../../../app/providers/ContextProvider/model/contexts/CharactersContext';
-import { CharactersActionKinds } from '../../../../app/providers/ContextProvider/model/types';
+import {
+  CharactersActionKinds,
+  PaginationActionKinds,
+} from '../../../../app/providers/ContextProvider/model/types';
+import { PaginationContext } from '../../../../app/providers/ContextProvider/model/contexts/PaginationContext';
 
 export const useMainPage = () => {
   const {
     state: { searchTerm },
   } = useContext(SearchContext);
-  const { dispatch } = useContext(CharactersContext);
+  const { dispatch: CharactersDispatch } = useContext(CharactersContext);
+  const {
+    state: { currPage, lastPage },
+    dispatch: PaginationDispatch,
+  } = useContext(PaginationContext);
   const Api = CharactersAPI.getInstance();
 
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  const { currPage, setCurrPage, lastPage, setLastPage, limit, setLimit } =
-    usePagination();
+  const { limit, setLimit } = usePagination();
 
   useEffect(() => {
     localStorage.setItem(hashLSKey('searchParam'), searchTerm);
-    setCurrPage(1);
-  }, [searchTerm, setCurrPage]);
+    PaginationDispatch({ type: PaginationActionKinds.SET_CURR, payload: 1 });
+  }, [PaginationDispatch, searchTerm]);
 
   const getCharacters = useCallback(async () => {
     setIsReady(false);
@@ -31,11 +38,27 @@ export const useMainPage = () => {
       limit: limit,
     });
 
-    dispatch({ type: CharactersActionKinds.SET, payload: answer.characters });
-    setCurrPage(answer.page);
-    setLastPage(Math.floor(answer.records / limit));
+    CharactersDispatch({
+      type: CharactersActionKinds.SET,
+      payload: answer.characters,
+    });
+    PaginationDispatch({
+      type: PaginationActionKinds.SET_CURR,
+      payload: answer.page,
+    });
+    PaginationDispatch({
+      type: PaginationActionKinds.SET_LAST,
+      payload: Math.floor(answer.records / limit),
+    });
     setIsReady(true);
-  }, [Api, currPage, dispatch, limit, searchTerm, setCurrPage, setLastPage]);
+  }, [
+    Api,
+    searchTerm,
+    currPage,
+    limit,
+    CharactersDispatch,
+    PaginationDispatch,
+  ]);
 
   useEffect(() => {
     getCharacters();
@@ -45,7 +68,7 @@ export const useMainPage = () => {
     isReady,
     currPage,
     lastPage,
-    setCurrPage,
+    // setCurrPage,
     limit,
     setLimit,
   };

@@ -8,8 +8,7 @@ import { Outlet } from 'react-router-dom';
 import classes from './MainPage.module.scss';
 
 const MainPage = () => {
-  const { isReady, currPage, lastPage, setCurrPage, limit, setLimit } =
-    useMainPage();
+  const { isReady, limit, setLimit } = useMainPage();
 
   return (
     <>
@@ -19,13 +18,7 @@ const MainPage = () => {
         <Content isReady={isReady} />
         <Outlet />
       </main>
-      {isReady && (
-        <Pagination
-          currPage={currPage}
-          lastPage={lastPage}
-          changePage={(pageNumber: number) => setCurrPage(pageNumber)}
-        />
-      )}
+      {isReady && <Pagination />}
     </>
   );
 };
