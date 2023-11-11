@@ -25,3 +25,17 @@ export type SearchAction = {
   type: SearchActionKinds;
   payload: string;
 };
+
+export type PaginationState = {
+  currPage: number;
+  lastPage: number;
+};
+
+export enum PaginationActionKinds {
+  SET = 'set',
+}
+
+export type PaginationAction = {
+  type: PaginationActionKinds;
+  payload: PaginationState;
+};
