@@ -5,14 +5,22 @@ import { RootInput } from '../../../shared/ui/RootInput';
 import classes from './Header.module.scss';
 import img from '../../../shared/assets/images/back.jpeg';
 import { SearchContext } from '../../../app/providers/ContextProvider/model/contexts/SearchContext';
-import { SearchActionKinds } from '../../../app/providers/ContextProvider/model/types';
+import {
+  PaginationActionKinds,
+  SearchActionKinds,
+} from '../../../app/providers/ContextProvider/model/types';
+import hashLSKey from '../../../shared/utils/hashLocalStorageKey';
+import { PaginationContext } from '../../../app/providers/ContextProvider/model/contexts/PaginationContext';
+import { useSearchParams } from 'react-router-dom';
 
 const Header = () => {
   const {
     state: { searchTerm },
     dispatch,
   } = useContext(SearchContext);
+  const { dispatch: PaginationDispatch } = useContext(PaginationContext);
   const [searchParam, setSearchParam] = useState<string>(searchTerm);
+  const [queryParams, setQueryParams] = useSearchParams();
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.target.value);
@@ -21,6 +29,10 @@ const Header = () => {
   const submitInput = (value: string) => {
     const trimed = value.trim();
     dispatch({ type: SearchActionKinds.SET, payload: trimed });
+    PaginationDispatch({ type: PaginationActionKinds.SET_CURR, payload: 1 });
+    queryParams.set('page', '1');
+    setQueryParams(queryParams);
+    localStorage.setItem(hashLSKey('searchParam'), trimed);
     setSearchParam(trimed);
   };
 

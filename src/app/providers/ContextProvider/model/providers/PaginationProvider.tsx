@@ -6,6 +6,7 @@ export const PaginationProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(paginationReducer, {
     currPage: 1,
     lastPage: 1,
+    limit: 6,
   });
   return (
     <PaginationContext.Provider value={{ state, dispatch }}>

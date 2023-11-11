@@ -1,11 +1,20 @@
+import { useContext } from 'react';
 import classes from './Dropdown.module.scss';
+import { PaginationContext } from '../../../app/providers/ContextProvider/model/contexts/PaginationContext';
+import { PaginationActionKinds } from '../../../app/providers/ContextProvider/model/types';
+import { useSearchParams } from 'react-router-dom';
 
-type Props = {
-  limit: number;
-  setLimit: (pageSize: number) => void;
-};
-export const Dropdown = (props: Props) => {
-  const { limit, setLimit } = props;
+export const Dropdown = () => {
+  const {
+    state: { limit },
+    dispatch,
+  } = useContext(PaginationContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const setLimit = (val: number) => {
+    dispatch({ type: PaginationActionKinds.SET_LIMIT, payload: val });
+    searchParams.set('page', `1`);
+    setSearchParams(searchParams);
+  };
 
   return (
     <div className={classes.wrapper}>

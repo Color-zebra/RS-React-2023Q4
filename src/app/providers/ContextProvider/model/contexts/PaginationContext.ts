@@ -10,6 +10,7 @@ const initialState: PaginataionContextState = {
   state: {
     currPage: 1,
     lastPage: 1,
+    limit: 6,
   },
   dispatch: () => {
     throw new Error('You should wrap your app with PaginationContext provider');

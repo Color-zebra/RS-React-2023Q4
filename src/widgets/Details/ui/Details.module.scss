@@ -10,7 +10,7 @@
 }
 .wrapper {
   position: relative;
-  flex: 1 1 100%;
+  flex: 1 1 calc(50% - 40px);
   display: flex;
   justify-content: center;
   align-items: center;

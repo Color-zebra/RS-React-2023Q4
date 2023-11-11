@@ -1,5 +1,5 @@
 .layout {
-  flex: 1 1 100%;
+  flex: 1 1 calc(50% - 40px);
   display: flex;
   gap: 20px;
   flex-direction: column;

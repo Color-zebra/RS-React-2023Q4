@@ -29,11 +29,13 @@ export type SearchAction = {
 export type PaginationState = {
   currPage: number;
   lastPage: number;
+  limit: number;
 };
 
 export enum PaginationActionKinds {
   SET_CURR = 'set current page',
   SET_LAST = 'set last page',
+  SET_LIMIT = 'set limit',
 }
 
 export type PaginationAction = {
