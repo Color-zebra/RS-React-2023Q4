@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { MainPage } from '../../../../pages/Main';
 import { Details } from '../../../../widgets/Details';
 import { FallBackPage } from '../../../../pages/FallBackPage';
+import { Page404 } from '../../../../pages/404Page';
 
 export const ConfiguredRouter = createBrowserRouter([
   {
@@ -11,9 +12,13 @@ export const ConfiguredRouter = createBrowserRouter([
     errorElement: <FallBackPage />,
     children: [
       {
-        path: ':id',
+        path: 'details/:id',
         element: <Details />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <Page404 />,
   },
 ]);

@@ -7,7 +7,7 @@ const CharacterCard = (props: CharacterAttributes) => {
   const navigate = useNavigate();
   const { name, image, species, gender, id } = props;
   const handleClick = () => {
-    navigate(id + window.location.search);
+    navigate(`details/${id + window.location.search}`);
   };
 
   return (
