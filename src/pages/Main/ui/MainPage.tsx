@@ -1,7 +1,6 @@
 import { Header } from '../../../widgets/Header';
 import { Content } from '../../../widgets/Content';
 import { Dropdown } from '../../../features/Dropdown';
-// import { Outlet } from 'react-router-dom';
 
 import classes from './MainPage.module.scss';
 
