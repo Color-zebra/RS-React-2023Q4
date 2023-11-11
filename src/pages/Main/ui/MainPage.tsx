@@ -9,8 +9,6 @@ import classes from './MainPage.module.scss';
 
 const MainPage = () => {
   const {
-    searchParam,
-    changeSearchParams,
     characters,
     isReady,
     currPage,
@@ -22,7 +20,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header onSearchPress={changeSearchParams} searchParam={searchParam} />
+      <Header />
       <Dropdown limit={limit} setLimit={setLimit} />
       <main className={classes.layout}>
         <Content characters={characters} isReady={isReady} />

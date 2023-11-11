@@ -1,30 +1,31 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { CharacterAttributes } from '../../../../shared/types/types';
 import { CharactersAPI } from '../../../../shared/api/RickAndMorty/Characters';
 import hashLSKey from '../../../../shared/utils/hashLocalStorageKey';
 import { usePagination } from './usePagination';
+import { SearchContext } from '../../../../app/providers/ContextProvider/model/contexts/SearchContext';
 
 export const useMainPage = () => {
+  const {
+    state: { searchTerm },
+  } = useContext(SearchContext);
   const Api = CharactersAPI.getInstance();
-  const initSearchParam = localStorage.getItem(hashLSKey('searchParam')) || '';
 
   const [characters, setCharacters] = useState<CharacterAttributes[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [searchParam, setSearchParam] = useState(initSearchParam);
 
   const { currPage, setCurrPage, lastPage, setLastPage, limit, setLimit } =
     usePagination();
 
-  const changeSearchParams = (newParam: string) => {
-    localStorage.setItem(hashLSKey('searchParam'), newParam);
+  useEffect(() => {
+    localStorage.setItem(hashLSKey('searchParam'), searchTerm);
     setCurrPage(1);
-    setSearchParam(newParam);
-  };
+  }, [searchTerm, setCurrPage]);
 
   const getCharacters = useCallback(async () => {
     setIsReady(false);
     const answer = await Api.getCharacters({
-      searchParam: searchParam,
+      searchParam: searchTerm,
       page: currPage,
       limit: limit,
     });
@@ -33,15 +34,13 @@ export const useMainPage = () => {
     setCurrPage(answer.page);
     setLastPage(Math.floor(answer.records / limit));
     setIsReady(true);
-  }, [Api, currPage, limit, searchParam, setCurrPage, setLastPage]);
+  }, [Api, currPage, limit, searchTerm, setCurrPage, setLastPage]);
 
   useEffect(() => {
     getCharacters();
   }, [getCharacters]);
 
   return {
-    searchParam,
-    changeSearchParams,
     characters,
     isReady,
     currPage,

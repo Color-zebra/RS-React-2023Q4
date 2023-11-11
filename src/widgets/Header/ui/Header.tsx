@@ -1,19 +1,18 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import { RootButton } from '../../../shared/ui/RootButton';
 import { RootInput } from '../../../shared/ui/RootInput';
 import classes from './Header.module.scss';
 import img from '../../../shared/assets/images/back.jpeg';
+import { SearchContext } from '../../../app/providers/ContextProvider/model/contexts/SearchContext';
+import { SearchActionKinds } from '../../../app/providers/ContextProvider/model/types';
 
-type Props = {
-  onSearchPress: (val: string) => void;
-  searchParam: string;
-};
-
-const Header = (props: Props) => {
-  const { searchParam: initialSearchParam, onSearchPress } = props;
-
-  const [searchParam, setSearchParam] = useState<string>(initialSearchParam);
+const Header = () => {
+  const {
+    state: { searchTerm },
+    dispatch,
+  } = useContext(SearchContext);
+  const [searchParam, setSearchParam] = useState<string>(searchTerm);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.target.value);
@@ -21,7 +20,7 @@ const Header = (props: Props) => {
 
   const submitInput = (value: string) => {
     const trimed = value.trim();
-    onSearchPress(trimed);
+    dispatch({ type: SearchActionKinds.SET, payload: trimed });
     setSearchParam(trimed);
   };
 
