@@ -32,10 +32,11 @@ export type PaginationState = {
 };
 
 export enum PaginationActionKinds {
-  SET = 'set',
+  SET_CURR = 'set current page',
+  SET_LAST = 'set last page',
 }
 
 export type PaginationAction = {
   type: PaginationActionKinds;
-  payload: PaginationState;
+  payload: number;
 };
