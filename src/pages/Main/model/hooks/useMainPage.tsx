@@ -1,17 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { CharacterAttributes } from '../../../../shared/types/types';
 import { CharactersAPI } from '../../../../shared/api/RickAndMorty/Characters';
 import hashLSKey from '../../../../shared/utils/hashLocalStorageKey';
 import { usePagination } from './usePagination';
 import { SearchContext } from '../../../../app/providers/ContextProvider/model/contexts/SearchContext';
+import { CharactersContext } from '../../../../app/providers/ContextProvider/model/contexts/CharactersContext';
+import { CharactersActionKinds } from '../../../../app/providers/ContextProvider/model/types';
 
 export const useMainPage = () => {
   const {
     state: { searchTerm },
   } = useContext(SearchContext);
+  const { dispatch } = useContext(CharactersContext);
   const Api = CharactersAPI.getInstance();
 
-  const [characters, setCharacters] = useState<CharacterAttributes[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const { currPage, setCurrPage, lastPage, setLastPage, limit, setLimit } =
@@ -30,18 +31,17 @@ export const useMainPage = () => {
       limit: limit,
     });
 
-    setCharacters(answer.characters);
+    dispatch({ type: CharactersActionKinds.SET, payload: answer.characters });
     setCurrPage(answer.page);
     setLastPage(Math.floor(answer.records / limit));
     setIsReady(true);
-  }, [Api, currPage, limit, searchTerm, setCurrPage, setLastPage]);
+  }, [Api, currPage, dispatch, limit, searchTerm, setCurrPage, setLastPage]);
 
   useEffect(() => {
     getCharacters();
   }, [getCharacters]);
 
   return {
-    characters,
     isReady,
     currPage,
     lastPage,

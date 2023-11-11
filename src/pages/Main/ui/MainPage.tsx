@@ -8,22 +8,15 @@ import { Outlet } from 'react-router-dom';
 import classes from './MainPage.module.scss';
 
 const MainPage = () => {
-  const {
-    characters,
-    isReady,
-    currPage,
-    lastPage,
-    setCurrPage,
-    limit,
-    setLimit,
-  } = useMainPage();
+  const { isReady, currPage, lastPage, setCurrPage, limit, setLimit } =
+    useMainPage();
 
   return (
     <>
       <Header />
       <Dropdown limit={limit} setLimit={setLimit} />
       <main className={classes.layout}>
-        <Content characters={characters} isReady={isReady} />
+        <Content isReady={isReady} />
         <Outlet />
       </main>
       {isReady && (
