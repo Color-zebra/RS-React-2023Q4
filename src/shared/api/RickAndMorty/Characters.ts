@@ -118,9 +118,10 @@ export class CharactersAPI {
   private createCharactersQueryStr(params: RequestParams) {
     const { searchParam = null, page = null, limit = null } = params;
     const queryString = searchParam ? `&search.name=${searchParam}` : '';
-    const pageString = page ? `&page=${page}` : '';
+    const pageString = page ? `&page=${+page - 1}` : '';
     const pageSizeString = limit ? `&page_size=${limit}` : '';
     const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;
+    console.log(link);
 
     return link;
   }
