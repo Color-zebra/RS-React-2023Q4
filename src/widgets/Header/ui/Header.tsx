@@ -55,8 +55,12 @@ const Header = () => {
             value={searchParam}
             onChange={onInputChange}
             onKeyDown={onKeyPress}
+            data-testid="search-input"
           />
-          <RootButton onClick={() => submitInput(searchParam)}>
+          <RootButton
+            onClick={() => submitInput(searchParam)}
+            data-testid="search-submit-button"
+          >
             Search
           </RootButton>
         </div>

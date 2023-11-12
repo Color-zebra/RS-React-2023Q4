@@ -16,6 +16,8 @@ type Resolver = ResponseResolver<
 >;
 
 const searchResponder: Resolver = async ({ request }) => {
+  console.log('SEARCH RESPONDER');
+
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('search.name');
   const page = Number(url.searchParams.get('page')) || 0;
@@ -38,6 +40,7 @@ const searchResponder: Resolver = async ({ request }) => {
 };
 
 const detailsResponder: Resolver = async ({ params }) => {
+  console.log('DETAILS RESPONDER');
   const { detailsId } = params;
   const res = mockData.find(({ id }) => id === +detailsId);
   const right = HttpResponse.json(

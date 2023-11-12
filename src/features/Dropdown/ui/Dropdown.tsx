@@ -23,6 +23,7 @@ export const Dropdown = () => {
         className={classes.dropdown}
         value={limit}
         onChange={(e) => setLimit(Number(e.target.value))}
+        data-testid="card-per-page-selector"
       >
         <option className={classes.item} value="6">
           6
