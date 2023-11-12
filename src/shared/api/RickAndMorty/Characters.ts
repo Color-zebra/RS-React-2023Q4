@@ -121,6 +121,7 @@ export class CharactersAPI {
     const pageString = page ? `&page=${+page - 1}` : '';
     const pageSizeString = limit ? `&page_size=${limit}` : '';
     const link = `${this.baseURL}?${queryString}${pageString}${pageSizeString}`;
+    console.log(link);
 
     return link;
   }
