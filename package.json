@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "vitest --reporter verbose",
+    "test": "vitest --reporter",
     "coverage": "vitest run --coverage",
     "start": "vite",
     "build": "tsc && vite build",

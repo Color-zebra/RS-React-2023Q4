@@ -10,5 +10,6 @@ export default defineConfig({
     environment: 'jsdom',
     css: true,
     setupFiles: './src/shared/config/test/setup.ts',
+    reporters: 'verbose',
   },
 });

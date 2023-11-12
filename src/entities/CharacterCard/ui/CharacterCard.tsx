@@ -11,7 +11,7 @@ const CharacterCard = (props: CharacterAttributes) => {
   };
 
   return (
-    <article onClick={handleClick} className={classes.card}>
+    <article onClick={handleClick} className={classes.card} data-testid="card">
       <div className={classes['image-wrapper']}>
         <img
           className={classes.image}

@@ -7,7 +7,7 @@ export const DetailedCharacterCard = (props: CharacterAttributes) => {
 
   return (
     <>
-      <article className={classes.wrapper}>
+      <article className={classes.wrapper} data-testid="details">
         <div className={classes['image-wrapper']}>
           <img
             className={classes.image}
