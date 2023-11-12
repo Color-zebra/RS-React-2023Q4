@@ -32,7 +32,7 @@ describe('Card component testing', () => {
   test('Clicking on a card opens a detailed card component', async () => {
     render(<App />);
     await userEvent.click((await screen.findAllByTestId('card'))[0]);
-    expect(screen.getByTestId('details')).toBeInTheDocument();
+    expect(await screen.findByTestId('details')).toBeInTheDocument();
   });
 
   test('Clicking triggers an additional API call to fetch detailed information', async () => {

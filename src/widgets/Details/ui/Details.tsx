@@ -30,7 +30,11 @@ export const Details = () => {
   }, [api, id]);
   return (
     <>
-      <div className={classes.back} onClick={closeDetails}></div>
+      <div
+        className={classes.back}
+        data-testid="close-details-button"
+        onClick={closeDetails}
+      ></div>
       <div className={classes.wrapper}>
         <Link to={'..' + window.location.search}>
           <div className={classes.close}>
