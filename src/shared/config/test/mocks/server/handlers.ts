@@ -31,7 +31,7 @@ const searchResponder: Resolver = async ({ request }) => {
   return HttpResponse.json(
     {
       results: resData,
-      total: limit,
+      total: 40,
     },
     { status: 200 }
   );

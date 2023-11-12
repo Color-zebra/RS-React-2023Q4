@@ -37,7 +37,11 @@ export const Pagination = () => {
         &lt;
       </RootButton>
       <RootTextField>{currPage}</RootTextField>
-      <RootButton disabled={currPage >= lastPage} onClick={nextPage}>
+      <RootButton
+        disabled={currPage >= lastPage}
+        onClick={() => nextPage()}
+        data-testid="next-page-button"
+      >
         &gt;
       </RootButton>
     </div>
