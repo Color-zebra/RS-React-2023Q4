@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -16,6 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
+    "types": ["vitest/globals"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -7,11 +7,11 @@ const CharacterCard = (props: CharacterAttributes) => {
   const navigate = useNavigate();
   const { name, image, species, gender, id } = props;
   const handleClick = () => {
-    navigate(id + window.location.search);
+    navigate(`details/${id + window.location.search}`);
   };
 
   return (
-    <div onClick={handleClick} className={classes.card}>
+    <article onClick={handleClick} className={classes.card} data-testid="card">
       <div className={classes['image-wrapper']}>
         <img
           className={classes.image}
@@ -30,7 +30,7 @@ const CharacterCard = (props: CharacterAttributes) => {
           gender: <span className={classes.value}>{gender}</span>
         </li>
       </ul>
-    </div>
+    </article>
   );
 };
 
