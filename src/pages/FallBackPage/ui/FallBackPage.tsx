@@ -8,12 +8,12 @@ const FallBackPage = () => {
   };
 
   return (
-    <div className={classes.page} style={{ backgroundImage: `url(${img})` }}>
+    <main className={classes.page} style={{ backgroundImage: `url(${img})` }}>
       <div className={classes.content}>
         <p>Looks like everything is broken :&#40;</p>
         <RootButton onClick={updatePage}>Update page</RootButton>
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -1,0 +1,76 @@
+.page {
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: whitesmoke;
+}
+
+.content {
+  font-size: 32px;
+  color: white;
+  padding: 20vmin;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  border-radius: 10vmin;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.h1 {
+  font-size: 7rem;
+  user-select: none;
+}
+
+.h2 {
+  font-size: 6rem;
+  user-select: none;
+}
+
+.h3 {
+  font-size: 5rem;
+  user-select: none;
+}
+
+.h4 {
+  font-size: 4rem;
+  user-select: none;
+}
+
+.h5 {
+  font-size: 3rem;
+  user-select: none;
+}
+
+.h6 {
+  font-size: 2rem;
+  user-select: none;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin: 2rem;
+  font-size: 3rem;
+  text-decoration: none;
+  background-color: rgba(255, 134, 53, 0.1);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 3s;
+  color: rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: rgba(255, 134, 53, 0.9);
+    color: rgba(0, 0, 0, 1);
+    transform: scale(1.2);
+  }
+}

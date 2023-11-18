@@ -1,19 +1,44 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { CharacterCard } from '../../../entities/CharacterCard';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
 import classes from './Content.module.scss';
 import { NothingFound } from '../../../entities/NothingFound';
-import { CharacterAttributes } from '../../../shared/types/types';
-import { useNavigate } from 'react-router-dom';
+import { Pagination } from '../../../features/Pagination';
+import { Outlet } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../shared/store/hooks/hooks';
+import { rickAndMortyApi } from '../../../shared/store/services/userService';
+import {
+  setIsCharactersLoading,
+  setLastPage,
+} from '../../../shared/store/reducers/appSlice';
 
-type Props = {
-  isReady: boolean;
-  characters: CharacterAttributes[];
-};
+const Content = () => {
+  const dispatch = useAppDispatch();
+  const {
+    searchTerm,
+    itemsPerPage: limit,
+    currPage,
+  } = useAppSelector((store) => store.appSliceReducer);
+  const {
+    data,
+    isSuccess: isReady,
+    isFetching,
+  } = rickAndMortyApi.useGetAllCharactersQuery({
+    page: String(currPage),
+    limit: String(limit),
+    searchTerm,
+  });
+  const characters = data?.results;
 
-const Content = (props: Props) => {
-  const { isReady, characters } = props;
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(setIsCharactersLoading(isFetching));
+    if (isReady) {
+      dispatch(setLastPage(Math.floor(data.total / limit)));
+    }
+  }, [data?.total, dispatch, isFetching, isReady, limit]);
 
   let res: ReactNode;
 
@@ -31,13 +56,14 @@ const Content = (props: Props) => {
 
   return (
     <>
-      {isReady ? (
-        res
+      {!isFetching ? (
+        <>
+          {res}
+          <Outlet />
+          <Pagination />
+        </>
       ) : (
-        <div
-          className={classes.spinner}
-          onClick={() => navigate('..' + window.location.search)}
-        >
+        <div className={classes.spinner}>
           <Spinner />
         </div>
       )}
