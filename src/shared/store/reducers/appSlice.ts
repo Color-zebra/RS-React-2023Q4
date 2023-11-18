@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppSliceType } from '../../types/storeTypes';
-import hashLSKey from '../../utils/hashLocalStorageKey';
 
 const initialState: AppSliceType = {
   isCharactersLoading: false,
@@ -8,7 +7,7 @@ const initialState: AppSliceType = {
   itemsPerPage: 6,
   currPage: 1,
   lastPage: 1,
-  searchTerm: localStorage.getItem(hashLSKey('searchParam')) || '',
+  searchTerm: '',
 };
 
 const appSlice = createSlice({
