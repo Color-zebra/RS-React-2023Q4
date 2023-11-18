@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { CharacterCard } from '../../../entities/CharacterCard';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
 import classes from './Content.module.scss';
@@ -16,6 +16,7 @@ import {
 } from '../../../shared/store/reducers/appSlice';
 
 const Content = () => {
+  const dispatch = useAppDispatch();
   const {
     searchTerm,
     itemsPerPage: limit,
@@ -31,11 +32,14 @@ const Content = () => {
     searchTerm,
   });
   const characters = data?.results;
-  const dispatch = useAppDispatch();
-  dispatch(setIsCharactersLoading(isFetching));
-  if (isReady) {
-    dispatch(setLastPage(Math.floor(data.total / limit)));
-  }
+
+  useEffect(() => {
+    dispatch(setIsCharactersLoading(isFetching));
+    if (isReady) {
+      dispatch(setLastPage(Math.floor(data.total / limit)));
+    }
+  }, [data?.total, dispatch, isFetching, isReady, limit]);
+
   let res: ReactNode;
 
   if (characters && characters.length !== 0) {
