@@ -1,24 +1,23 @@
-import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import { RootButton } from '../../../shared/ui/RootButton';
 import { RootInput } from '../../../shared/ui/RootInput';
 import classes from './Header.module.scss';
 import img from '../../../shared/assets/images/back.jpeg';
-import { SearchContext } from '../../../app/providers/ContextProvider/model/contexts/SearchContext';
-import {
-  PaginationActionKinds,
-  SearchActionKinds,
-} from '../../../app/providers/ContextProvider/model/types';
 import hashLSKey from '../../../shared/utils/hashLocalStorageKey';
-import { PaginationContext } from '../../../app/providers/ContextProvider/model/contexts/PaginationContext';
 import { useSearchParams } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../shared/store/hooks/hooks';
+import {
+  setCurrPage,
+  setSearchTerm,
+} from '../../../shared/store/reducers/appSlice';
 
 const Header = () => {
-  const {
-    state: { searchTerm },
-    dispatch,
-  } = useContext(SearchContext);
-  const { dispatch: PaginationDispatch } = useContext(PaginationContext);
+  const { searchTerm } = useAppSelector((store) => store.appSliceReducer);
+  const dispatch = useAppDispatch();
   const [searchParam, setSearchParam] = useState<string>(searchTerm);
   const [queryParams, setQueryParams] = useSearchParams();
 
@@ -28,11 +27,11 @@ const Header = () => {
 
   const submitInput = (value: string) => {
     const trimed = value.trim();
-    dispatch({ type: SearchActionKinds.SET, payload: trimed });
-    PaginationDispatch({ type: PaginationActionKinds.SET_CURR, payload: 1 });
+    dispatch(setCurrPage(1));
     queryParams.set('page', '1');
     setQueryParams(queryParams);
     localStorage.setItem(hashLSKey('searchParam'), trimed);
+    dispatch(setSearchTerm(trimed));
     setSearchParam(trimed);
   };
 

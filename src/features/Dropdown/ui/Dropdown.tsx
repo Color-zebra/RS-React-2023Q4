@@ -1,17 +1,23 @@
-import { useContext } from 'react';
 import classes from './Dropdown.module.scss';
-import { PaginationContext } from '../../../app/providers/ContextProvider/model/contexts/PaginationContext';
-import { PaginationActionKinds } from '../../../app/providers/ContextProvider/model/types';
 import { useSearchParams } from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../shared/store/hooks/hooks';
+import {
+  setCurrPage,
+  setItemsPerPage,
+} from '../../../shared/store/reducers/appSlice';
 
 export const Dropdown = () => {
-  const {
-    state: { limit },
-    dispatch,
-  } = useContext(PaginationContext);
+  const { itemsPerPage: limit } = useAppSelector(
+    (store) => store.appSliceReducer
+  );
+  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const setLimit = (val: number) => {
-    dispatch({ type: PaginationActionKinds.SET_LIMIT, payload: val });
+    dispatch(setItemsPerPage(val));
+    dispatch(setCurrPage(1));
     searchParams.set('page', `1`);
     setSearchParams(searchParams);
   };
