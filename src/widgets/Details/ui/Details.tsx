@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import classes from './Details.module.scss';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
 import { DetailedCharacterCard } from '../../../entities/DetailedCharacterCard';
@@ -12,7 +13,10 @@ export const Details = () => {
     rickAndMortyApi.useGetSingleCharacterQuery(id!);
 
   const dispatch = useAppDispatch();
-  dispatch(setIsDetailsLoading(isReady));
+
+  useEffect(() => {
+    dispatch(setIsDetailsLoading(isReady));
+  }, [dispatch, isReady]);
 
   const navigate = useNavigate();
 
