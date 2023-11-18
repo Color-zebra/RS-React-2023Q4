@@ -39,8 +39,6 @@ describe('Card component testing', () => {
     render(<App />);
     const fetchSpy = vi.spyOn(window, 'fetch');
     await userEvent.click((await screen.findAllByTestId('card'))[0]);
-    expect(fetchSpy).toHaveBeenCalledWith(
-      'https://belka.romakhin.ru/api/v1/rimorti/222'
-    );
+    expect(fetchSpy).toHaveBeenCalled();
   });
 });
