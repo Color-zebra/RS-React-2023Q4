@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
 import { ErrorButton } from '../../../features/ErrorButton';
 import { RootButton } from '../../../shared/ui/RootButton';
 import { RootInput } from '../../../shared/ui/RootInput';
@@ -17,9 +17,17 @@ import {
 
 const Header = () => {
   const { searchTerm } = useAppSelector((store) => store.appSliceReducer);
+
   const dispatch = useAppDispatch();
   const [searchParam, setSearchParam] = useState<string>(searchTerm);
   const [queryParams, setQueryParams] = useSearchParams();
+
+  useEffect(() => {
+    const savedValue = localStorage.getItem(hashLSKey('searchParam'));
+    if (savedValue && savedValue !== searchTerm) {
+      setSearchParam(savedValue);
+    }
+  }, [searchTerm]);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.target.value);

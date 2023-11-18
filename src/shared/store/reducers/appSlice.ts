@@ -13,7 +13,7 @@ const initialState: AppSliceType = {
 
 const appSlice = createSlice({
   name: 'app',
-  initialState,
+  initialState: () => initialState,
   reducers: {
     setItemsPerPage: (state, action: PayloadAction<number>) => {
       state.itemsPerPage = action.payload;
