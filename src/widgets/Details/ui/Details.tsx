@@ -1,33 +1,28 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import classes from './Details.module.scss';
-import { useEffect, useState } from 'react';
-import { CharactersAPI } from '../../../shared/api/RickAndMorty/Characters';
 import Spinner from '../../../shared/ui/Spinner/Spinner';
-import { CharacterAttributes } from '../../../shared/types/types';
 import { DetailedCharacterCard } from '../../../entities/DetailedCharacterCard';
+import { rickAndMortyApi } from '../../../shared/store/services/userService';
+import { useAppDispatch } from '../../../shared/store/hooks/hooks';
+import { setIsDetailsLoading } from '../../../shared/store/reducers/appSlice';
 
 export const Details = () => {
-  const api = CharactersAPI.getInstance();
   const { id } = useParams();
-  const [isReady, setIsReady] = useState<boolean>(false);
-  const [charData, setCharData] = useState<CharacterAttributes | null>(null);
+  const { isSuccess: isReady, data: charData } =
+    rickAndMortyApi.useGetSingleCharacterQuery(id!);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setIsDetailsLoading(isReady));
+  }, [dispatch, isReady]);
 
   const navigate = useNavigate();
 
   const closeDetails = () => {
     navigate('..' + window.location.search);
   };
-
-  useEffect(() => {
-    const fetchCharacter = async () => {
-      setIsReady(false);
-      const data = await api.getSingleCharacter(id!);
-      setCharData(data);
-      setIsReady(true);
-    };
-
-    fetchCharacter();
-  }, [api, id]);
   return (
     <>
       <div
