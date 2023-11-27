@@ -1,5 +1,10 @@
+import { ReduxProvider } from './providers/ReduxProvider';
 import { RouterApp } from './providers/Router';
 
 export const App = () => {
-  return <RouterApp />;
+  return (
+    <ReduxProvider>
+      <RouterApp />
+    </ReduxProvider>
+  );
 };

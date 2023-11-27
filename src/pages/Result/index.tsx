@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../shared/store/hooks/hooks';
 
 export const Result = () => {
+  useAppSelector((store) => {
+    console.log(store.FormReducer.formData);
+  });
   return (
     <div>
       <h1>There will be form result</h1>
