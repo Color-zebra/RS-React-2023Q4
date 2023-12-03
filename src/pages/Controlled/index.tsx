@@ -1,10 +1,3 @@
-import { Link } from 'react-router-dom';
+import { Controlled } from './ui/Controlled';
 
-export const Controlled = () => {
-  return (
-    <div>
-      <h1>There will be form with controlled inputs</h1>
-      <Link to={'/'}>Main page</Link>
-    </div>
-  );
-};
+export { Controlled };
