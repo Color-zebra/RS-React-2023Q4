@@ -6,6 +6,7 @@
   font-size: 12px;
   align-items: center;
   text-align: left;
+  padding: 5px;
 
   span {
     width: 100%;
@@ -26,6 +27,10 @@
     height: auto;
     object-position: center;
   }
+}
+
+.wrapper {
+  border: 1px solid var(--decor);
 }
 
 .wrapper:first-child {

@@ -18,10 +18,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addForm } from '../../../shared/store/slices/formDataSlice';
 import { base64Code } from '../../../shared/utils/Base64';
+import { isUncontrolledFormComplete } from '../../../shared/utils/IsUncontrolledFormComplete';
 
 export const UncontrolledForm = () => {
   const countries = useAppSelector((store) => store.CountriesReducer.countries);
   const [errors, setErrors] = useState<Partial<FormErrorsType>>({});
+  const [isFormFilled, setIsFormFilled] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -57,8 +59,13 @@ export const UncontrolledForm = () => {
       setErrors(formErrors);
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const isComplete = isUncontrolledFormComplete(e);
+    if (isComplete !== isFormFilled) setIsFormFilled(isComplete);
+  };
   return (
-    <form className={s['form']} onSubmit={onSubmit}>
+    <form className={s['form']} onSubmit={onSubmit} onChange={handleChange}>
       <h3>Uncontrolled form</h3>
       <TextInput
         label="Username"
@@ -108,7 +115,7 @@ export const UncontrolledForm = () => {
         error={errors.country}
       />
       <FileInput name="image" error={errors.image} />
-      <Button disabled={false} name="Submit" type="submit" />
+      <Button disabled={!isFormFilled} name="Submit" type="submit" />
     </form>
   );
 };
