@@ -1,4 +1,7 @@
-import { useAppSelector } from '../../../shared/store/hooks/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../shared/store/hooks/hooks';
 import { AutocompleteInput } from '../../../shared/ui/AutocompleteInput';
 import s from './UncontrolledForm.module.scss';
 import { FormErrorsType } from '../../../shared/types/types';
@@ -12,10 +15,15 @@ import { Button } from '../../../shared/ui/Button/Button';
 import { prepareUncontrolledFormData } from '../../../shared/utils/PrepareUncontrolledeFormData';
 import { ValidationError } from 'yup';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addForm } from '../../../shared/store/slices/formDataSlice';
+import { base64Code } from '../../../shared/utils/Base64';
 
 export const UncontrolledForm = () => {
   const countries = useAppSelector((store) => store.CountriesReducer.countries);
   const [errors, setErrors] = useState<Partial<FormErrorsType>>({});
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,8 +34,10 @@ export const UncontrolledForm = () => {
         strict: true,
         abortEarly: false,
       });
+      const dataForSubmit = { ...res, image: await base64Code(res.image!) };
+      dispatch(addForm(dataForSubmit));
       setErrors({});
-      console.log('res', res);
+      navigate('/');
     } catch (e) {
       if (!(e instanceof ValidationError)) {
         throw new Error('Everything is broken. Nice work!');
@@ -49,7 +59,7 @@ export const UncontrolledForm = () => {
   };
   return (
     <form className={s['form']} onSubmit={onSubmit}>
-      <h3>Controlled form</h3>
+      <h3>Uncontrolled form</h3>
       <TextInput
         label="Username"
         name="name"

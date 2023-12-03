@@ -1,5 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useAppSelector } from '../../../shared/store/hooks/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../shared/store/hooks/hooks';
 import { AutocompleteInput } from '../../../shared/ui/AutocompleteInput';
 import s from './ControlledForm.module.scss';
 import { FormType } from '../../../shared/types/types';
@@ -13,9 +16,13 @@ import { CheckBoxInput } from '../../../shared/ui/CheckBoxInput/CheckBoxInput';
 import { FileInput } from '../../../shared/ui/FileInput/FileInput';
 import { Button } from '../../../shared/ui/Button/Button';
 import { base64Code } from '../../../shared/utils/Base64';
+import { addForm } from '../../../shared/store/slices/formDataSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const ControlledForm = () => {
   const countries = useAppSelector((store) => store.CountriesReducer.countries);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const form = useForm<FormType>({
     defaultValues: initialValues,
@@ -25,18 +32,16 @@ export const ControlledForm = () => {
 
   const { register, handleSubmit, setValue, formState, trigger } = form;
   const { errors, isDirty, isValid } = formState;
-
-  console.log(isDirty, isValid);
-
   const isFormValid = !(!isDirty || !isValid);
 
   const onSubmit = async (data: FormType) => {
-    const res = await base64Code(data.image);
-    console.log(res);
+    const dataForSubmit = { ...data, image: await base64Code(data.image!) };
+    dispatch(addForm(dataForSubmit));
+    navigate('/');
   };
   return (
     <form className={s['form']} onSubmit={handleSubmit(onSubmit)}>
-      <h3>Controlled form</h3>
+      <h3>Controlled form (React hook forms)</h3>
       <TextInput
         label="Username"
         name="name"

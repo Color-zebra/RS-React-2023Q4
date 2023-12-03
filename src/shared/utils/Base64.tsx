@@ -1,10 +1,15 @@
-export const base64Code = (list: FileList | undefined) => {
-  if (list === undefined) return;
+export const base64Code = (list: FileList): Promise<string> => {
   const file = list[0];
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        resolve('');
+      }
+    };
+    reader.onerror = () => reject('');
   });
 };

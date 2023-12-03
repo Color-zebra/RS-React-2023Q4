@@ -4,6 +4,7 @@ export enum Genders {
   M = 'Male',
   F = 'Female',
 }
+
 export type FormType = {
   name: string;
   age: number;
@@ -16,8 +17,20 @@ export type FormType = {
   country: string;
 };
 
+export type SubmitFormType = {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  repeatPassword: string;
+  gender: string;
+  acceptTermsAndConditions: boolean;
+  image: string;
+  country: string;
+};
+
 export type AppSlice = {
-  formData: FormType;
+  forms: SubmitFormType[];
 };
 
 export type Countries = string[];

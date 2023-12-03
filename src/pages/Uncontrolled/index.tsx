@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { UncontrolledForm } from '../../widgets/UncontrolledForm';
+import s from './Uncontrolled.module.scss';
 
 export const Uncontrolled = () => {
   return (
-    <div>
-      <h1>There will be form with uncontrolled input</h1>
+    <div className={s['wrapper']}>
       <Link to={'/'}>Main page</Link>
       <UncontrolledForm />
     </div>

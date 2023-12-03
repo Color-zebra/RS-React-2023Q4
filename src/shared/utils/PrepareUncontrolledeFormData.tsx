@@ -24,7 +24,5 @@ export const prepareUncontrolledFormData = (
       ? (NaN as unknown as FormDataEntryValue)
       : (Number(data.age) as unknown as FormDataEntryValue);
 
-  console.log(data);
-
   return data;
 };

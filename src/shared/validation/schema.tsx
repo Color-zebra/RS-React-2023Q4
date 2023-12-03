@@ -38,10 +38,18 @@ export const schema: yup.ObjectSchema<FormType> = yup.object({
     }),
   name: yup
     .string()
+    .matches(
+      /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
+      'Can only contain Latin letters.'
+    )
     .required('Field is required!')
     .matches(/^[A-Z].*/, 'First letter must be capital'),
   password: yup
     .string()
+    .matches(
+      /^([A-Za-z0-9\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s!?@#$%^&*]*)$/gi,
+      'Can only contain Latin letters.'
+    )
     .required('Field is required!')
     .matches(/\d/, 'The password should contain at least one number')
     .matches(
@@ -58,6 +66,10 @@ export const schema: yup.ObjectSchema<FormType> = yup.object({
     ),
   repeatPassword: yup
     .string()
+    .matches(
+      /^([A-Za-z0-9\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s!?@#$%^&*]*)$/gi,
+      'Can only contain Latin letters.'
+    )
     .required('Field is required!')
     .test('passwords-match', 'Passwords is not the same', function (value) {
       return this.parent.password === value;

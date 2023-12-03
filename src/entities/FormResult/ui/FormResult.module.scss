@@ -1,0 +1,47 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  width: 100%;
+  font-size: 12px;
+  align-items: center;
+  text-align: left;
+
+  span {
+    width: 100%;
+  }
+}
+
+.value {
+  color: violet;
+}
+
+.img-wrapper {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-position: center;
+  }
+}
+
+.wrapper:first-child {
+  border: 1px solid violet;
+  animation: pulse 0.5s ease infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 1px violet;
+  }
+  50% {
+    box-shadow: 0 0 10px violet;
+  }
+  100% {
+    box-shadow: 0 0 1px violet;
+  }
+  
+}
