@@ -3,6 +3,8 @@
   flex-direction: column;
   width: 250px;
   position: relative;
+  padding-bottom: 30px;
+  z-index: 2;
 }
 
 .input-wrapper {
@@ -21,9 +23,17 @@
   background: white;
 }
 
+.label {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+  padding-top: 0;
+  margin-top: 0;
+}
+
 .variants-wrapper {
   position: absolute;
-  top: 30px;
+  top: 57px;
   width: 100%;
 }
 
@@ -33,6 +43,7 @@
   cursor: pointer;
   background-color: var(--main);
   padding: 2px 0px 2px 5px;
+  background-color: var(--main);
 
 
   &:first-child {
@@ -46,4 +57,15 @@
     background-color: var(--decor-dark);
     color: white;
   }
+}
+
+.error {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  color: red;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  text-align: left;
 }

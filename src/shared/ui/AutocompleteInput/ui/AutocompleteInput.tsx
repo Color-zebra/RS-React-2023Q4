@@ -1,26 +1,28 @@
 import { useState } from 'react';
 import s from './AutocompleteInput.module.scss';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { FieldError, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { FormType } from '../../../types/types';
 
 type AutocompleteInputType = {
   autocompleteList: string[];
   register: UseFormRegister<FormType>;
   setValue: UseFormSetValue<FormType>;
+  error?: FieldError;
+  label: string;
 };
 
 export const AutocompleteInput = ({
   autocompleteList,
   register,
   setValue: SetValueHook,
+  label,
+  error,
 }: AutocompleteInputType) => {
   const [value, setValue] = useState<string>('');
   const [currVariants, setCurrVariants] = useState<string[]>([]);
   const [isVariantsShown, setIsVariantsShown] = useState<boolean>(false);
 
   const handleVarClick = (str: string) => {
-    console.log('click');
-
     setValue(str);
     SetValueHook('country', str);
     setIsVariantsShown(false);
@@ -31,8 +33,6 @@ export const AutocompleteInput = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('change');
-
     const newVal = e.target.value;
     setValue(newVal);
     if (newVal === '') {
@@ -47,6 +47,7 @@ export const AutocompleteInput = ({
 
   return (
     <div className={s['wrapper']}>
+      <p className={s['label']}>{label}</p>
       <div className={s['input-wrapper']}>
         <input
           className={s['input']}
@@ -65,6 +66,7 @@ export const AutocompleteInput = ({
           autoComplete="off"
         ></input>
       </div>
+      {error && <p className={s['error']}>{error.message}</p>}
       {isVariantsShown && (
         <div className={s['variants-wrapper']}>
           {currVariants.map((str) => (
