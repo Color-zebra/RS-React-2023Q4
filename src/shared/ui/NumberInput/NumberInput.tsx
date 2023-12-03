@@ -26,6 +26,7 @@ export const NumberInput = ({
     <label className={s['wrapper']}>
       <p className={s['label']}>{label}</p>
       <input
+        name={name}
         className={s['input']}
         type="number"
         {...registerProps}

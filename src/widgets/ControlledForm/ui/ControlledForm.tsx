@@ -12,6 +12,7 @@ import { SelectInput } from '../../../shared/ui/SelectInput/SelectInput';
 import { CheckBoxInput } from '../../../shared/ui/CheckBoxInput/CheckBoxInput';
 import { FileInput } from '../../../shared/ui/FileInput/FileInput';
 import { Button } from '../../../shared/ui/Button/Button';
+import { base64Code } from '../../../shared/utils/Base64';
 
 export const ControlledForm = () => {
   const countries = useAppSelector((store) => store.CountriesReducer.countries);
@@ -19,17 +20,19 @@ export const ControlledForm = () => {
   const form = useForm<FormType>({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'all',
   });
 
   const { register, handleSubmit, setValue, formState, trigger } = form;
-  const { errors, touchedFields } = formState;
-  const isFormValid =
-    Object.keys(errors).length === 0 && Object.keys(touchedFields).length !== 0;
+  const { errors, isDirty, isValid } = formState;
 
-  const onSubmit = (data: FormType) => {
-    console.log(data);
-    console.log(errors);
+  console.log(isDirty, isValid);
+
+  const isFormValid = !(!isDirty || !isValid);
+
+  const onSubmit = async (data: FormType) => {
+    const res = await base64Code(data.image);
+    console.log(res);
   };
   return (
     <form className={s['form']} onSubmit={handleSubmit(onSubmit)}>
@@ -84,6 +87,7 @@ export const ControlledForm = () => {
         register={register}
       />
       <AutocompleteInput
+        name="country"
         label="Country"
         register={register}
         autocompleteList={countries}

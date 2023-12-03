@@ -5,10 +5,11 @@ import { FormType } from '../../../types/types';
 
 type AutocompleteInputType = {
   autocompleteList: string[];
-  register: UseFormRegister<FormType>;
-  setValue: UseFormSetValue<FormType>;
+  register?: UseFormRegister<FormType>;
+  setValue?: UseFormSetValue<FormType>;
   error?: FieldError;
   label: string;
+  name: keyof FormType;
 };
 
 export const AutocompleteInput = ({
@@ -17,6 +18,7 @@ export const AutocompleteInput = ({
   setValue: SetValueHook,
   label,
   error,
+  name,
 }: AutocompleteInputType) => {
   const [value, setValue] = useState<string>('');
   const [currVariants, setCurrVariants] = useState<string[]>([]);
@@ -24,7 +26,9 @@ export const AutocompleteInput = ({
 
   const handleVarClick = (str: string) => {
     setValue(str);
-    SetValueHook('country', str);
+    if (SetValueHook) {
+      SetValueHook('country', str);
+    }
     setIsVariantsShown(false);
     const newVariants = autocompleteList.filter((country) =>
       country.toLowerCase().includes(str.toLowerCase())
@@ -45,6 +49,27 @@ export const AutocompleteInput = ({
     setCurrVariants(newVariants.slice(0, 5));
   };
 
+  let registerProps = null;
+  if (register) {
+    registerProps = register('country', {
+      onChange: (e) => handleChange(e),
+      onBlur: () =>
+        setTimeout(() => {
+          setIsVariantsShown(false);
+        }, 500),
+      value: value,
+    });
+  } else {
+    registerProps = {
+      onChange: handleChange,
+      onBlur: () =>
+        setTimeout(() => {
+          setIsVariantsShown(false);
+        }, 500),
+      value: value,
+    };
+  }
+
   return (
     <div className={s['wrapper']}>
       <p className={s['label']}>{label}</p>
@@ -54,17 +79,11 @@ export const AutocompleteInput = ({
           onFocus={() => {
             setIsVariantsShown(true);
           }}
-          {...register('country', {
-            onChange: (e) => handleChange(e),
-            onBlur: () =>
-              setTimeout(() => {
-                setIsVariantsShown(false);
-              }, 500),
-            value: value,
-          })}
+          {...registerProps}
           type="text"
           autoComplete="off"
-        ></input>
+          name={name}
+        />
       </div>
       {error && <p className={s['error']}>{error.message}</p>}
       {isVariantsShown && (

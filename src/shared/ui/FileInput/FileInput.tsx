@@ -20,7 +20,13 @@ export const FileInput = ({ register, name, error }: FileInputType) => {
       <label className={s['custom']}>
         <span>Upload</span>
 
-        <input {...registerProps} className={s['input']} type="file" />
+        <input
+          name={name}
+          {...registerProps}
+          className={s['input']}
+          type="file"
+          multiple
+        />
       </label>
       {error && <span className={s['error']}>{error.message}</span>}
     </div>

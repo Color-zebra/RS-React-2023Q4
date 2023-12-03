@@ -1,3 +1,5 @@
+import { FieldError } from 'react-hook-form';
+
 export enum Genders {
   M = 'Male',
   F = 'Female',
@@ -23,3 +25,5 @@ export type Countries = string[];
 export type CountriesSlice = {
   countries: Countries;
 };
+
+export type FormErrorsType = Record<keyof FormType, FieldError>;

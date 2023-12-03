@@ -11,7 +11,7 @@ export const schema: yup.ObjectSchema<FormType> = yup.object({
     .typeError('Amount must be a number')
     .required('Field is required!')
     .min(0, 'Age cannot be negative'),
-  country: yup.string().required('Please, select your country'),
+  country: yup.string().required('Field is required!'),
   email: yup
     .string()
     .required('Field is required!')
@@ -24,7 +24,18 @@ export const schema: yup.ObjectSchema<FormType> = yup.object({
       'required',
       'Selecting file is required',
       (value) => value?.length !== 0
-    ),
+    )
+    .test(
+      'size',
+      'Image size should be less than 1Mb',
+      (value) => value[0]?.size < 1048576
+    )
+    .test('type', 'only jpeg and png allowed', (value) => {
+      const type = value[0]?.type;
+      return (
+        type?.includes('jpg') || type?.includes('jpeg') || type?.includes('png')
+      );
+    }),
   name: yup
     .string()
     .required('Field is required!')

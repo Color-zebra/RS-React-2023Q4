@@ -32,6 +32,7 @@ export const TextInput = ({
     <label className={s['wrapper']}>
       <p className={s['label']}>{label}</p>
       <input
+        name={name}
         className={s['input']}
         type={type}
         {...registerProps}

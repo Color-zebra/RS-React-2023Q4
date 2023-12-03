@@ -23,7 +23,12 @@ export const CheckBoxInput = ({
   return (
     <label className={s['wrapper']}>
       <p className={s['label']}>{label}</p>
-      <input className={s['input']} type="checkbox" {...registerProps} />
+      <input
+        name={name}
+        className={s['input']}
+        type="checkbox"
+        {...registerProps}
+      />
       {error && <p className={s['error']}>{error.message}</p>}
     </label>
   );
